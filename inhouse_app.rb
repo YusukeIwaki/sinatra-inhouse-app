@@ -31,7 +31,13 @@ class InhouseApp < Sinatra::Base
 
   get '/' do
     authorize!
-    '<h1>It works!</h1>'
+
+    AuditLog.create!(
+      subject: "#{session[:user]} accessed",
+      description: "#{session[:user]} accessed on '/'",
+    )
+
+    "<h1>It works!</h1> -- #{AuditLog.count}"
   end
 
   get '/auth/github/callback' do
