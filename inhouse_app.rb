@@ -1,4 +1,8 @@
 require 'sinatra/base'
+Dir['./app/models/**/*.rb'].each { |f| require_relative f }
+
+ActiveRecord::Base.logger = Logger.new($stdout)
+ActiveRecord::Base.verbose_query_logs = true
 
 class InhouseApp < Sinatra::Base
   use Rack::Session::Cookie

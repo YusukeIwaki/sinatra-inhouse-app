@@ -7,12 +7,28 @@ services:
       - ruby-bundle:/usr/local/bundle
     working_dir: /sinatra-inhouse-app
     environment:
+      - POSTGRES_HOST=postgresql
+      - POSTGRES_USER=dbuser
+      - POSTGRES_PASSWORD=dbpassword
       - GITHUB_CLIENT_ID
       - GITHUB_CLIENT_SECRET
+    depends_on:
+      - postgresql
     ports:
       - 4567:4567
     command: bundle exec rackup --host 0.0.0.0 --port 4567
 
+  postgresql:
+    image: postgres:12-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: dbuser
+      POSTGRES_PASSWORD: dbpassword
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data
+
 volumes:
   ruby-bundle:
+    driver: local
+  postgresql-data:
     driver: local
