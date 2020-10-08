@@ -37,7 +37,7 @@ class InhouseApp < Sinatra::Base
       description: "#{session[:user]} accessed on '/'",
     )
 
-    "<h1>It works!</h1> -- #{AuditLog.count}"
+    erb :'index.html'
   end
 
   get '/auth/github/callback' do
