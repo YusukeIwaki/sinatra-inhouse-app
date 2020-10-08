@@ -40,6 +40,22 @@ class InhouseApp < Sinatra::Base
     erb :'index.html'
   end
 
+  get '/profile' do
+    @form = ProfileForm.new
+    erb :'profile.html'
+  end
+
+  post '/profile' do
+    profile_form_params = params.slice(:name, :age, :address)
+    @form = ProfileForm.new(profile_form_params)
+    if @form.valid?
+      "Profile登録しにいく"
+      redirect to('/profile')
+    else
+      erb :'profile.html'
+    end
+  end
+
   get '/auth/github/callback' do
     auth_hash = request.env['omniauth.auth']
     session[:user] = auth_hash['extra']['raw_info']['login']

@@ -1,0 +1,27 @@
+<html>
+<body>
+<h1>Profile</h1>
+
+<% if @form.errors.present? %>
+<ul class="errors">
+<% @form.errors.full_messages.each do |error_message| %>
+  <li><%= error_message %></li>
+<% end %>
+</ul>
+<% end %>
+
+<form action='/profile' method='POST'>
+  <div>
+    name: <input type="text" name="name" value="<%= @form.name %>" />
+  </div>
+  <div>
+    age: <input type="number" name="age" value="<%= @form.age %>" />
+  </div>
+  <div>
+    address: <input type="text" name="address" value="<%= @form.address %>" />
+  </div>
+
+  <input type="submit" value="OK" />
+</form>
+</body>
+</html>
